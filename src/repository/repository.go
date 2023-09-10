@@ -1,8 +1,8 @@
-package repositories
+package repository
 
 import (
 	"errors"
-	"github.com/paulogrillo/apirest-go-lang/src/models"
+	"../models"
 )
 
 type CandidateRepository struct {
@@ -11,11 +11,11 @@ type CandidateRepository struct {
 
 func NewCandidateRepository() *CandidateRepository {
 	return &CandidateRepository{
-		Candidates: make(map[string]Candidate),
+		Candidates: make(map[string]models.Candidate),
 	}
 }
 
-func (r *CandidateRepository) Create(candidate *models.Candidate) error {
+func (r *CandidateRepository) Create(candidate models.Candidate) error {
 	if _, exists := r.Candidates[candidate.ID]; exists {
 		return errors.New("Candidato já existe")
 	}
@@ -23,15 +23,15 @@ func (r *CandidateRepository) Create(candidate *models.Candidate) error {
 	return nil
 }
 
-func (r *CandidateRepository) Get(ID string) (Candidate, error) {
+func (r *CandidateRepository) Get(ID string) (models.Candidate, error) {
 	candidate, exists := r.Candidates[ID]
 	if !exists {
-		return Candidate{}, errors.New("Candidato não encontrado")
+		return models.Candidate{}, errors.New("Candidato não encontrado")
 	}
 	return candidate, nil
 }
 
-func (r *CandidateRepository) Update(ID string, candidate Candidate) error {
+func (r *CandidateRepository) Update(ID string, candidate models.Candidate) error {
 	if _, exists := r.Candidates[ID]; !exists {
 		return errors.New("Candidato não encontrado")
 	}
